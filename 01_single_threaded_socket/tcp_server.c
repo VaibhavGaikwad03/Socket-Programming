@@ -39,6 +39,8 @@ void setup_tcp_server_communication()
     /* Step 3: specify server information */
     server_addr.sin_family = AF_INET;   /* This socket will process only ipv4 network packets */
     server_addr.sin_port = SERVER_PORT; /* Server will process any data arriving on port no 2000 */
+
+    /*  */
 }
 
 int main(void)
