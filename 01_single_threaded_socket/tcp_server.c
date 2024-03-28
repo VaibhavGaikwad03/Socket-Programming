@@ -139,9 +139,12 @@ void setup_tcp_server_communication()
 
                 /* Server replying back to client now */
                 sent_recv_bytes = sendto(communication_socket_fd, (char *)&result, sizeof(result_struct_t), 0, (struct sockaddr *)&client_addr, sizeof(struct sockaddr));
+
+                printf("Server sent %d bytes in reply to client\n", sent_recv_bytes);
+                /* Goto state machine state 3 */
             }
         }
-    }
+    } /* Step 10: wait for new client request again */
 }
 
 int main(void)
