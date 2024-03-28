@@ -23,7 +23,7 @@ void setup_tcp_server_communication()
     int master_sock_tcp_fd = 0, sent_recv_bytes = 0, addr_len = 0, opt = 1;
 
     /* Client specific communication socket file descriptor, used for only data exchange/communication between client and server */
-    int comm_socket_fd = 0;
+    int communication_socket_fd = 0;
     /* Set of file descriptor on which select() polls. select() unblocks whenever data arrives on any fd present in this set */
     fd_set readfds;
     /* Variables to hold server information */
@@ -88,8 +88,8 @@ void setup_tcp_server_communication()
             life of connection with this client to send and receive  message. Master socket is used only for accepting
             new client's connection and not for data exchange with the client */
             /* State machine state 2 */
-            comm_socket_fd = accept(master_sock_tcp_fd, (struct sockaddr *)&client_addr, addr_len);
-            if (comm_socket_fd < 0)
+            communication_socket_fd = accept(master_sock_tcp_fd, (struct sockaddr *)&client_addr, addr_len);
+            if (communication_socket_fd < 0)
             {
                 /* If accept failed to return a socket descriptor, display error and exit */
                 printf("Accept error: errono = %d\n", errno);
@@ -110,7 +110,7 @@ void setup_tcp_server_communication()
                 /* Like in client case, this is also a blocking system call, meaning, server process halts here untill
                 data arrives on this comm_socket_fd from client whose connection request has been accepted via accept() */
                 /* State machine state 3 */
-                sent_recv_bytes = recvfrom(comm_socket_fd, (char *)data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&client_addr, &addr_len);
+                sent_recv_bytes = recvfrom(communication_socket_fd, (char *)data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&client_addr, &addr_len);
 
                 /* State machine state 4 */
                 printf("Server recvd %d bytes from client %s:%u\n", sent_recv_bytes, inet_nota(client_addr.sin_addr), ntohs(client_addr.sin_port));
@@ -118,9 +118,14 @@ void setup_tcp_server_communication()
                 if (sent_recv_bytes == 0)
                 {
                     /* If server recvs empty message from client, server may close the connection and wait for fresh new connection from client - same or different */
-                    close(comm_socket_fd);
+                    close(communication_socket_fd);
                     break; /* goto step 5 */
                 }
+
+                test_struct_t *client_data = (test_struct_t *)data_buffer;
+
+                /* If the client sends a special message to server, then server close the client connection forever */
+                /* Step 9: */
             }
         }
     }
