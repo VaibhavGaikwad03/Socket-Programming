@@ -107,7 +107,20 @@ void setup_tcp_server_communication()
                 /* Step 8: Server receiving the data from client. Client IP PORT no will be stored in client_addr
                 by the kernel. Server will use this client_addr info to reply back to client */
 
-                /* Like */
+                /* Like in client case, this is also a blocking system call, meaning, server process halts here untill
+                data arrives on this comm_socket_fd from client whose connection request has been accepted via accept() */
+                /* State machine state 3 */
+                sent_recv_bytes = recvfrom(comm_socket_fd, (char *)data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&client_addr, &addr_len);
+
+                /* State machine state 4 */
+                printf("Server recvd %d bytes from client %s:%u\n", sent_recv_bytes, inet_nota(client_addr.sin_addr), ntohs(client_addr.sin_port));
+
+                if (sent_recv_bytes == 0)
+                {
+                    /* If server recvs empty message from client, server may close the connection and wait for fresh new connection from client - same or different */
+                    close(comm_socket_fd);
+                    break; /* goto step 5 */
+                }
             }
         }
     }
