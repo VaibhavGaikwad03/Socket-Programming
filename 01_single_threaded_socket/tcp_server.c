@@ -44,6 +44,13 @@ void setup_tcp_server_communication()
     server_addr.sin_addr.s_addr = INADDR_ANY;
 
     addr_len = sizeof(struct sockaddr);
+
+    /* Bind the server. Binding means, we are telling kernel(OS) that any data
+    you receive with dest ip address = 192.168.56.101, and tcp port number = 2000, please send that data to this process
+    bind() is a mechanism to tell OS what kind of data server process is interested in to receive. Remember, server machine
+    used on server side, not a client side */
+
+    
 }
 
 int main(void)
