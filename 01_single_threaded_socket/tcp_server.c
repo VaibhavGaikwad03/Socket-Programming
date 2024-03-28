@@ -64,7 +64,26 @@ void setup_tcp_server_communication()
     }
 
     /* Server infinite loop for servicing the client */
-    
+    while (1)
+    {
+        /* Step 5: initialize and dill readfds */
+        FD_ZERO(&readfds); /* Initialize the file descriptor set */
+        FD_SET(master_sock_tcp_fd, &readfds); /* Add the socket to this set on which our server is running */
+
+        printf("Blocked on select system call..\n");
+
+        /* Step 6: wait for client connection */
+        /* State machine state 1 */
+
+        /* Call the select system call, server process blocks here. Linux OS keeps this process blocked untill the data arrives on any of the file descriptors in the 'readfs' set */
+        select(master_sock_tcp_fd + 1, &readfds, NULL, NULL, NULL);
+
+        /* Some data on some fd present in set has arrived, Now check on which file descriptor the data arrives, and process accordingly */
+        if (FD_ISSET(master_sock_tcp_fd, &readfds))
+        {
+            /* Data arrives on master socket only when new  */
+        }
+    }
 }
 
 int main(void)
