@@ -67,7 +67,7 @@ void setup_tcp_server_communication()
     while (1)
     {
         /* Step 5: initialize and dill readfds */
-        FD_ZERO(&readfds); /* Initialize the file descriptor set */
+        FD_ZERO(&readfds);                    /* Initialize the file descriptor set */
         FD_SET(master_sock_tcp_fd, &readfds); /* Add the socket to this set on which our server is running */
 
         printf("Blocked on select system call..\n");
@@ -85,7 +85,16 @@ void setup_tcp_server_communication()
             printf("New connection received recvd, accept the connection. Client and Server completes TCP-3 way handshake at this point\n");
 
             /* Step 7: accept() returns a new temporary file descriptor(fd). Server uses this 'comm_socket_fd' fd for the rest of the
-            life of connection with this client to send and receive */
+            life of connection with this client to send and receive  message. Master socket is used only for accepting
+            new client's connection and not for data exchange with the client */
+            /* State machine state 2 */
+            comm_socket_fd = accept(master_sock_tcp_fd, (struct sockaddr *)&client_addr, addr_len);
+            if (comm_socket_fd < 0)
+            {
+                /* If accept failed to return a socket descriptor, display error and exit */
+                printf("Accept error: errono = %d\n", errno);
+                exit(0);
+            }
         }
     }
 }
