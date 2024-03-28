@@ -50,7 +50,13 @@ void setup_tcp_server_communication()
     bind() is a mechanism to tell OS what kind of data server process is interested in to receive. Remember, server machine
     used on server side, not a client side */
 
-    
+    if (bind(master_sock_tcp_fd, (struct sockaddr *)&server_addr, sizeof(struct sockaddr)) == -1)
+    {
+        printf("Socket bind failed\n");
+        return;
+    }
+
+    /*  */
 }
 
 int main(void)
