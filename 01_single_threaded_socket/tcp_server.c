@@ -28,6 +28,15 @@ void setup_tcp_server_communication()
     fd_set readfds;
     /* Variables to hold server information */
     struct sockaddr_in server_addr, client_addr; /* Structure to store the server and client info */
+
+    /* Step 2: tcp master socket creation */
+    if ((master_sock_tcp_fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == -1)
+    {
+        printf("Socket creation failed\n");
+        exit(1);
+    }
+
+    /*  */
 }
 
 int main(void)
