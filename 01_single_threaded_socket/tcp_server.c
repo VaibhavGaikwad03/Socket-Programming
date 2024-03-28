@@ -62,6 +62,9 @@ void setup_tcp_server_communication()
         printf("Listen failed\n");
         return;
     }
+
+    /* Server infinite loop for servicing the client */
+    
 }
 
 int main(void)
