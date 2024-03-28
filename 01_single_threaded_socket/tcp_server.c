@@ -81,7 +81,11 @@ void setup_tcp_server_communication()
         /* Some data on some fd present in set has arrived, Now check on which file descriptor the data arrives, and process accordingly */
         if (FD_ISSET(master_sock_tcp_fd, &readfds))
         {
-            /* Data arrives on master socket only when new  */
+            /* Data arrives on master socket only when new client connects with the server (that is, 'connect' call is invoked on client side) */
+            printf("New connection received recvd, accept the connection. Client and Server completes TCP-3 way handshake at this point\n");
+
+            /* Step 7: accept() returns a new temporary file descriptor(fd). Server uses this 'comm_socket_fd' fd for the rest of the
+            life of connection with this client to send and receive */
         }
     }
 }
