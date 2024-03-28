@@ -56,7 +56,12 @@ void setup_tcp_server_communication()
         return;
     }
 
-    /*  */
+    /* Step 4: tell the Linux OS to maintain the queue of max length to queue incoming client connections. */
+    if (listen(master_sock_tcp_fd, 5) < 0)
+    {
+        printf("Listen failed\n");
+        return;
+    }
 }
 
 int main(void)
