@@ -126,6 +126,19 @@ void setup_tcp_server_communication()
 
                 /* If the client sends a special message to server, then server close the client connection forever */
                 /* Step 9: */
+                if (client_data->a == 0 && client_data->b == 0)
+                {
+                    close(communication_socket_fd);
+                    printf("Server closes connection with client: %s:%u\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+                    /* Goto state machine state 1 */
+                    break; /* Get out of inner while loop, server is done with this client, time to check for new connection request by executing select() */
+                }
+
+                result_struct_t result;
+                result.c = client_data->a + client_data->b;
+
+                /* Server replying back to client now */
+                sent_recv_bytes = sendto(communication_socket_fd, (char *)&result, sizeof(result_struct_t), 0, (struct sockaddr *)&client_addr, sizeof(struct sockaddr));
             }
         }
     }
