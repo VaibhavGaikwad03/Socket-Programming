@@ -95,6 +95,15 @@ void setup_tcp_server_communication()
                 printf("Accept error: errono = %d\n", errno);
                 exit(0);
             }
+
+            printf("Connection accepted from client =: %s: %u\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+
+            while (1)
+            {
+                printf("Server ready to service clients messages\n");
+                /* Drain to store client info (ip and port) when data arrives from client, sometimes, server would want to find the identity of the client sending messages */
+                memset(data_buffer, 0, sizeof(data_buffer));
+            }
         }
     }
 }
