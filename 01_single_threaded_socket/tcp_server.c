@@ -3,7 +3,9 @@
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <netdb.h>
+#include <unistd.h>
 #include <memory.h>
 #include <errno.h>
 #include "common.h"
@@ -88,7 +90,7 @@ void setup_tcp_server_communication()
             life of connection with this client to send and receive  message. Master socket is used only for accepting
             new client's connection and not for data exchange with the client */
             /* State machine state 2 */
-            communication_socket_fd = accept(master_sock_tcp_fd, (struct sockaddr *)&client_addr, addr_len);
+            communication_socket_fd = accept(master_sock_tcp_fd, (struct sockaddr *)&client_addr, &addr_len);
             if (communication_socket_fd < 0)
             {
                 /* If accept failed to return a socket descriptor, display error and exit */
@@ -113,7 +115,7 @@ void setup_tcp_server_communication()
                 sent_recv_bytes = recvfrom(communication_socket_fd, (char *)data_buffer, sizeof(data_buffer), 0, (struct sockaddr *)&client_addr, &addr_len);
 
                 /* State machine state 4 */
-                printf("Server recvd %d bytes from client %s:%u\n", sent_recv_bytes, inet_nota(client_addr.sin_addr), ntohs(client_addr.sin_port));
+                printf("Server recvd %d bytes from client %s:%u\n", sent_recv_bytes, inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
 
                 if (sent_recv_bytes == 0)
                 {
