@@ -27,6 +27,7 @@ void setup_tcp_server_communication()
     /* Set of file descriptor on which select() polls. select() unblocks whenever data arrives on any fd present in this set */
     fd_set readfds;
     /* Variables to hold server information */
+    struct sockaddr_in server_addr, client_addr; /* Structure to store the server and client info */
 }
 
 int main(void)
