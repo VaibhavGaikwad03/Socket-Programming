@@ -103,6 +103,11 @@ void setup_tcp_server_communication()
                 printf("Server ready to service clients messages\n");
                 /* Drain to store client info (ip and port) when data arrives from client, sometimes, server would want to find the identity of the client sending messages */
                 memset(data_buffer, 0, sizeof(data_buffer));
+
+                /* Step 8: Server receiving the data from client. Client IP PORT no will be stored in client_addr
+                by the kernel. Server will use this client_addr info to reply back to client */
+
+                /* Like */
             }
         }
     }
