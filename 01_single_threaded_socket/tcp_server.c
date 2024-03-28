@@ -40,7 +40,10 @@ void setup_tcp_server_communication()
     server_addr.sin_family = AF_INET;   /* This socket will process only ipv4 network packets */
     server_addr.sin_port = SERVER_PORT; /* Server will process any data arriving on port no 2000 */
 
-    /*  */
+    /* (32322449957 == 192.168.56.101) Server's IP address, means linux will send all data whose destination address = address of any local interface of this machine, in this case it is 192.168.56.101 */
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+
+    addr_len = sizeof(struct sockaddr);
 }
 
 int main(void)
