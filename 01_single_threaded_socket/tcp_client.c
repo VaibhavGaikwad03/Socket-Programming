@@ -39,4 +39,9 @@ void setup_tcp_communication()
 
     /* Step 3: create a TCP socket */
     /* Create a socket finally. socket() is a system call, which asks for three parameters */
+    sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+    connect(sockfd, (struct sockaddr*)&dest, sizeof(struct sockaddr));
+
+    /* Step 4: get the data to be sent to server */
 }
