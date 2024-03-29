@@ -33,4 +33,10 @@ void setup_tcp_communication()
     Inform client about which server to send data to: All we need is port number, and server IP address. Please note that
     there can be many processes running on the server listening on different number of ports,
     our client is interested in sending data to server process which is listening on PORT = DEST_PORT */
+    dest.sin_port = DEST_PORT;
+    struct hostent *host = (struct hostent *)gethostbyname(SERVER_IP_ADDRESS);
+    dest.sin_addr = ((struct in_addr *)host->h_addr);
+
+    /* Step 3: create a TCP socket */
+    /* Create a socket finally. socket() is a system call, which asks for three parameters */
 }
