@@ -20,4 +20,10 @@ void setup_tcp_communication()
     int addr_len = 0;
 
     addr_len = sizeof(struct sockaddr);
+
+    /* To store socket address: ip address and port */
+    struct sockaddr_in dest;
+
+    /* Step 2: specify server information */
+    /* IPv4 sockets, other values are IPv6 */
 }
