@@ -26,4 +26,10 @@ void setup_tcp_communication()
 
     /* Step 2: specify server information */
     /* IPv4 sockets, other values are IPv6 */
+    dest.sin_family = AF_INET;
+
+    /* Client wants to send data to server process which is running on server machine, and listening on
+    port number DEST_PORT, server IP address SERVER_IP_ADDRESS.
+    Inform client about which server to send data to: All we need is port number, and server IP address. Please note that
+    there can be many */
 }
