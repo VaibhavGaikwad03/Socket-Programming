@@ -31,5 +31,6 @@ void setup_tcp_communication()
     /* Client wants to send data to server process which is running on server machine, and listening on
     port number DEST_PORT, server IP address SERVER_IP_ADDRESS.
     Inform client about which server to send data to: All we need is port number, and server IP address. Please note that
-    there can be many */
+    there can be many processes running on the server listening on different number of ports,
+    our client is interested in sending data to server process which is listening on PORT = DEST_PORT */
 }
