@@ -41,7 +41,31 @@ void setup_tcp_communication()
     /* Create a socket finally. socket() is a system call, which asks for three parameters */
     sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
-    connect(sockfd, (struct sockaddr*)&dest, sizeof(struct sockaddr));
+    connect(sockfd, (struct sockaddr *)&dest, sizeof(struct sockaddr));
 
     /* Step 4: get the data to be sent to server */
+    /* Out client is now ready to send data to server. sendto() sends data to server */
+PROMPT_USER:
+
+    /* Prompt the user to enter data */
+    printf("Enter A: ");
+    scanf("%u", &client_data.a);
+    printf("Enter B: ");
+    scanf("%u", &client_data.b);
+
+    /* Step 5: send the data to server */
+    sent_recv_bytes = sendto(sockfd, &client_data, sizeof(test_struct_t), 0, (struct sockaddr *)&dest, sizeof(struct sockaddr));
+
+    printf("Number of bytes sent = %d\n", sent_recv_bytes);
+
+    /* Step 6: client also want to reply from server after sending data */
+    /* recvfrom is a blocking system call, meaning the client program will not run past this point
+    untill the data arrives on the socket from server */
+    sent_recv_bytes = recvfrom(sockfd, (char *)&result, sizeof(result_struct_t), 0, (struct sockaddr *)&dest, &addr_len);
+
+    printf("Number of bytes received = %d\n", sent_recv_bytes);
+    printf("Result received = %u\n", result.c);
+
+    /* Step 7: client would want to send the data again to the server, go into infinite loop */
+    goto PROMPT_USER;
 }
