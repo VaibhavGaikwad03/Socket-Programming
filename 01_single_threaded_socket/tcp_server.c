@@ -9,7 +9,7 @@
 #include <memory.h>
 #include <errno.h>
 #include "common.h"
-
+ 
 /* Server process is running on this port number. Client has to send data to this port no */
 #define SERVER_PORT 2000
 
